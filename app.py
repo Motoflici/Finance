@@ -1,9 +1,8 @@
 import datetime
-from markupsafe import escape
-from flask import Flask, abort, render_template, request, url_for, flash, redirect
+from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '9054ee8e382fae3ae8f01b0e249015c19bbc48cc67d13fd4'
+app.config['SECRET_KEY'] = 'dev'
 
 
 @app.route('/')
@@ -58,11 +57,12 @@ def courseSimulation_post():
     operational = request.form['operational']
     competitionHourly = request.form['competition']
     courseHourCost = (int(pret)/int(durata))/5
-    hourlyComparison = (int(competitionHourly)/int(courseHourCost))
+    hourlyComparison = (int(courseHourCost)/int(competitionHourly))
     revenue = (int(studenti) * int(iteratii) * int(pret))/5
-    costs = (int(durata) * int(rate) * int(iteratii)) + int(marketing) + (int(operational) * int(studenti) * int(iteratii)) + (int(costLiceenta) * int(studenti) * int(iteratii))
+    calculateLicenseCost = int(costLiceenta) * int(studenti) * int(iteratii)
+    calculateDeliveryCost = (int(rate) * int(durata) * int(iteratii))
+    calculateOperationalCost = (int(operational) * int(studenti) * int(iteratii))
+    costs = calculateDeliveryCost + int(marketing) + calculateOperationalCost + calculateLicenseCost
     profit = revenue - costs
     profitMargin = (int(profit)/int(revenue))
-    return render_template('result.html', revenue=revenue, costs=costs, profit=profit, margin=profitMargin, hourly=courseHourCost, competition=hourlyComparison)
-
-
+    return render_template('result.html', revenue=revenue, costs=costs, profit=profit, margin=profitMargin, hourly=courseHourCost, competition=hourlyComparison, licenseCost=calculateLicenseCost, deliveryCost=calculateDeliveryCost, operationalCost=calculateOperationalCost)
