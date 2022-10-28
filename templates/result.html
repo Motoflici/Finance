@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Creaza o simulare noua (indicatori/curs) {% endblock %}</h1>
+     <div style="width: 50%; margin: auto">
+                <div style="padding: 10px;
+                            background-color: #EEE;
+                            margin: 20px">
+                    <table border="1px solid black">
+                    <thead><tr><th>KPI</th><th>Value (EUR)</th></tr></thead>
+                    <tbody>
+                    <tr><td>Course cost/hour</td><td>{{hourly}}</td></tr>
+                    <tr><td>Competition comparison</td><td>{{competition}}</td></tr>
+                    <tr><td>Revenue</td><td>{{revenue}}</td></tr>
+                    <tr><td>Cost</td><td>{{costs}}</td></tr>
+                    <tr><td>Profit</td><td>{{profit}}</td></tr>
+                    <tr><td>Profit Margin</td><td>{{margin}}</td></tr>
+                    </tbody>
+                    </table>
+                </div>
+     <div>
+
+
+{% endblock %}
+
+

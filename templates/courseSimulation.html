@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Creaza o simulare noua (indicatori/curs) {% endblock %}</h1>
+    <form method="post">
+        <label for="curs">Denumire curs</label>
+        <br>
+        <input type="text" name="curs"
+               value="{{ request.form['curs'] }}"></input>
+        <br>
+        <label for="durata">Numar ore</label>
+        <br>
+        <input type="text" name="durata"
+               value="{{ request.form['durata'] }}"></input>
+        <br>
+        <label for="pret">Cost curs</label>
+        <br>
+        <input type="text" name="pret"
+               value="{{ request.form['pret'] }}"></input>
+        <br>
+        <label for="competition">Avg.cost/h cursuri competitie</label>
+        <br>
+        <input type="text" name="competition"
+               value="{{ request.form['competition'] }}"></input>
+        <br>
+         <label for="license">Cost liceenta</label>
+        <br>
+        <input type="text" name="license"
+               value="{{ request.form['license'] }}"></input>
+        <br>
+        <label for="studenti">Studenti/Iteratie</label>
+        <br>
+        <input type="text" name="studenti"
+               value="{{ request.form['studenti'] }}"></input>
+        <br>
+
+        <label for="iteratii">Numar iteratii</label>
+        <br>
+        <input type="text" name="iteratii"
+               value="{{ request.form['iteratii'] }}"></input>
+        <br>
+        <label for="trainer">Nume profesor</label>
+        <br>
+        <input type="text" name="trainer"
+               value="{{ request.form['trainer'] }}"></input>
+        <br>
+        <label for="rate">Tarif orar</label>
+        <br>
+        <input type="text" name="rate"
+               value="{{ request.form['rate'] }}"></input>
+        <br>
+         <label for="marketing">Cost marketing anual</label>
+        <br>
+        <input type="text" name="marketing"
+               value="{{ request.form['marketing'] }}"></input>
+        <br>
+         <label for="operational">Cost operational per student</label>
+        <br>
+        <input type="text" name="operational"
+               value="{{ request.form['operational'] }}"></input>
+        <br>
+
+        <button type="submit">Calculeaza KPI</button>
+    </form>
+{% endblock %}
