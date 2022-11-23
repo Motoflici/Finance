@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Courses {% endblock %}</h1>
+    <hr>
+<table>
+  <tr>
+    <th>Nume curs</th>
+    <th>Durata curs (ore)</th>
+    <th>Cost curs (EUR)</th>
+      <th>Cost/h competitie (EUR)</th>
+    <th>Cost liceenta (EUR/sturent)</th>
+    <th>Numar studenti (avg/iteratie)</th>
+      <th>Numar iteratii</th>
+    <th>Numa trainer</th>
+    <th>Rate orar trainer (EUR)</th>
+      <th>Cost operational (EUR/student)</th>
+    <th>Cost marketing (EUR/an)</th>
+    <th>Cost trainer (EUR/an)</th>
+      <th>Cost liceente (EUR/an)</th>
+    <th>Costuri operationale (EUR/an)</th>
+    <th>Total incasari (EUR/an)</th>
+      <th>Total costuri (EUR/an)</th>
+    <th>Profit (EUR)</th>
+  </tr>
+{% for a in CourseName %}
+{% for b in CourseHours %}
+{% for c in CourseCost %}
+{% for d in CourseCompetitionRate %}
+{% for e in CourseLicenseCost %}
+{% for f in CourseStudents %}
+{% for g in CourseIterations %}
+{% for h in CourseTrainer %}
+{% for i in CourseTrainerRate %}
+{% for j in CourseStudentOperationalCost %}
+{% for k in courseMarketingCost %}
+{% for l in courseDeliveryCost %}
+{% for m in courseTotalLicenseCost %}
+{% for n in courseTotalOperationalCosts %}
+{% for o in courseTotalRevenue %}
+{% for p in courseTotalCosts %}
+{% for q in courseProfit %}
+  <tr>
+    <td>{{a}}</td>
+    <td>{{b}}</td>
+    <td>{{c}}</td>
+      <td>{{d}}</td>
+      <td>{{e}}</td>
+      <td>{{f}}</td>
+      <td>{{g}}</td>
+      <td>{{h}}</td>
+      <td>{{i}}</td>
+      <td>{{j}}</td>
+      <td>{k}</td>
+      <td>{{l}}</td>
+      <td>{{m}}</td>
+      <td>{{n}}</td>
+      <td>{o}</td>
+      <td>{{p}}</td>
+      <td>{{q}}</td>
+  </tr>
+ {% endfor %}
+     {% endfor %}
+     {% endfor %}
+ {% endfor %}
+ {% endfor %}
+ {% endfor %}
+ {% endfor %}
+ {% endfor %}
+ {% endfor %}
+ {% endfor %}
+ {% endfor %}
+ {% endfor %}
+ {% endfor %}
+ {% endfor %}
+ {% endfor %}
+ {% endfor %}
+ {% endfor %}
+
+</table>
+{% endblock %}

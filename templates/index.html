@@ -1,8 +1,152 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Index {% endblock %}</h1>
-    <h1>Hello World!</h1>
-    <h2>Welcome to FlaskApp!</h2>
-    <h3>{{ utc_dt }}</h3>
+    <h1>{% block title %} Add a New Course {% endblock %}</h1>
+
+    <form method="POST" action="/">
+        {{ form.csrf_token }}
+        <p>
+            {{ form.denumireCurs.label }}
+            {{ form.denumireCurs(size=20) }}
+        </p>
+
+        {% if form.denumireCurs.errors %}
+            <ul class="errors">
+                {% for error in form.title.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p>
+            {{ form.numarOre.label }}
+            {{ form.numarOre() }}
+        </p>
+
+        {% if form.numarOre.errors %}
+            <ul class="errors">
+                {% for error in form.price.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <p>
+            {{ form.costCurs.label }}
+            {{ form.costCurs() }}
+        </p>
+
+        {% if form.costCurs.errors %}
+            <ul class="errors">
+                {% for error in form.price.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p>
+            {{ form.costCompetitie.label }}
+            {{ form.costCompetitie() }}
+        </p>
+
+        {% if form.costCompetitie.errors %}
+            <ul class="errors">
+                {% for error in form.price.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p>
+            {{ form.costLiceenta.label }}
+            {{ form.costLiceenta() }}
+        </p>
+
+        {% if form.costLiceenta.errors %}
+            <ul class="errors">
+                {% for error in form.price.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p>
+            {{ form.students.label }}
+            {{ form.students() }}
+        </p>
+
+        {% if form.students.errors %}
+            <ul class="errors">
+                {% for error in form.price.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p>
+            {{ form.iteratii.label }}
+            {{ form.iteratii() }}
+        </p>
+
+        {% if form.iteratii.errors %}
+            <ul class="errors">
+                {% for error in form.price.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+         <p>
+            {{ form.numeProfesor.label }}
+            {{ form.numeProfesor(size=20) }}
+        </p>
+
+        {% if form.numeProfesor.errors %}
+            <ul class="errors">
+                {% for error in form.title.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <p>
+            {{ form.tarifOrar.label }}
+            {{ form.tarifOrar() }}
+        </p>
+
+        {% if form.tarifOrar.errors %}
+            <ul class="errors">
+                {% for error in form.price.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p>
+            {{ form.costOperational.label }}
+            {{ form.costOperational() }}
+        </p>
+
+        {% if form.costOperational.errors %}
+            <ul class="errors">
+                {% for error in form.price.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <p>
+            {{ form.costMarketing.label }}
+            {{ form.costMarketing() }}
+        </p>
+
+        {% if form.costMarketing.errors %}
+            <ul class="errors">
+                {% for error in form.price.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+       <p>
+            <input type="submit" value="Calculate">
+        </p>
+    </form>
+
 {% endblock %}
