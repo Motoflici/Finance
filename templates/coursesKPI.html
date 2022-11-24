@@ -2,6 +2,12 @@
 
 {% block content %}
     <h1>{% block title %} Courses {% endblock %}</h1>
+   <form method="POST" action="/coursesKPI/">
+                <input type="submit" value="Reset" name="Reset" />
+
+        </form>
+    </body>
+
     <hr>
 <table>
   <tr>
@@ -23,58 +29,26 @@
       <th>Total costuri (EUR/an)</th>
     <th>Profit (EUR)</th>
   </tr>
-{% for a in CourseName %}
-{% for b in CourseHours %}
-{% for c in CourseCost %}
-{% for d in CourseCompetitionRate %}
-{% for e in CourseLicenseCost %}
-{% for f in CourseStudents %}
-{% for g in CourseIterations %}
-{% for h in CourseTrainer %}
-{% for i in CourseTrainerRate %}
-{% for j in CourseStudentOperationalCost %}
-{% for k in courseMarketingCost %}
-{% for l in courseDeliveryCost %}
-{% for m in courseTotalLicenseCost %}
-{% for n in courseTotalOperationalCosts %}
-{% for o in courseTotalRevenue %}
-{% for p in courseTotalCosts %}
-{% for q in courseProfit %}
+{% for Course in courseList %}
   <tr>
-    <td>{{a}}</td>
-    <td>{{b}}</td>
-    <td>{{c}}</td>
-      <td>{{d}}</td>
-      <td>{{e}}</td>
-      <td>{{f}}</td>
-      <td>{{g}}</td>
-      <td>{{h}}</td>
-      <td>{{i}}</td>
-      <td>{{j}}</td>
-      <td>{k}</td>
-      <td>{{l}}</td>
-      <td>{{m}}</td>
-      <td>{{n}}</td>
-      <td>{o}</td>
-      <td>{{p}}</td>
-      <td>{{q}}</td>
+    <td>{{Course['CourseName']}}</td>
+      <td>{{Course['CourseHours']}}</td>
+    <td>{{Course['CourseCost']}}</td>
+      <td>{{Course['CourseCompetitionRate']}}</td>
+      <td>{{Course['CourseLicenseCost']}}</td>
+      <td>{{Course['CourseStudents']}}</td>
+      <td>{{Course['CourseIterations']}}</td>
+      <td>{{Course['CourseTrainer']}}</td>
+      <td>{{Course['CourseTrainerRate']}}</td>
+      <td>{{Course['CourseStudentOperationalCost']}}</td>
+      <td>{{Course['courseMarketingCost']}}</td>
+      <td>{{Course['courseDeliveryCost']}}</td>
+      <td>{{Course['courseTotalLicenseCost']}}</td>
+      <td>{{Course['courseTotalOperationalCost']}}</td>
+      <td>{{Course['courseTotalRevenue']}}</td>
+      <td>{{Course['courseTotalCosts']}}</td>
+      <td>{{Course['courseProfit']}}</td>
   </tr>
- {% endfor %}
-     {% endfor %}
-     {% endfor %}
- {% endfor %}
- {% endfor %}
- {% endfor %}
- {% endfor %}
- {% endfor %}
- {% endfor %}
- {% endfor %}
- {% endfor %}
- {% endfor %}
- {% endfor %}
- {% endfor %}
- {% endfor %}
- {% endfor %}
  {% endfor %}
 
 </table>
