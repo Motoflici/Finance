@@ -10,6 +10,7 @@
 
     <hr>
 <table>
+  <thead>
   <tr>
     <th>Nume curs</th>
     <th>Durata curs (ore)</th>
@@ -18,7 +19,7 @@
     <th>Cost liceenta (EUR/sturent)</th>
     <th>Numar studenti (avg/iteratie)</th>
       <th>Numar iteratii</th>
-    <th>Numa trainer</th>
+    <th>Nume trainer</th>
     <th>Rate orar trainer (EUR)</th>
       <th>Cost operational (EUR/student)</th>
     <th>Cost marketing (EUR/an)</th>
@@ -29,6 +30,8 @@
       <th>Total costuri (EUR/an)</th>
     <th>Profit (EUR)</th>
   </tr>
+  </thead>
+  <tbody>
 {% for Course in courseList %}
   <tr>
     <td>{{Course['CourseName']}}</td>
@@ -50,6 +53,6 @@
       <td>{{Course['courseProfit']}}</td>
   </tr>
  {% endfor %}
-
+</tbody>
 </table>
 {% endblock %}
