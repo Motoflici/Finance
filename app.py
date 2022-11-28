@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request
 from flask_wtf import form
 
-from forms import CourseSimulator
+from forms import CourseSimulator, PriceSimulator
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
@@ -19,8 +19,7 @@ def index():
         # definit sablon dictionar (Course data)
         # -> Preluat valori form ca parametrii
         courseData = {"CourseName": form.denumireCurs.data, "CourseHours": form.numarOre.data,
-                      "CourseCost": form.costCurs.data,
-                      "CourseCompetitionRate": form.costCompetitie.data, "CourseLicenseCost": form.costLiceenta.data,
+                      "CourseCost": form.costCurs.data, "CourseLicenseCost": form.costLiceenta.data,
                       "CourseStudents": form.students.data, "CourseIterations": form.iteratii.data,
                       "CourseTrainer": form.numeProfesor.data, "CourseTrainerRate": form.tarifOrar.data,
                       "CourseStudentOperationalCost": form.costOperational.data,
@@ -60,3 +59,20 @@ def ListClear():
             # pass # unknown
             return render_template("coursesKPI.html")
     return render_template("coursesKPI.html")
+
+
+@app.route("/priceSimulator/", methods=['GET', 'POST'])
+def priceSimulator():
+    form1 = PriceSimulator()
+    if form1.validate_on_submit():
+        priceSimulatorData = {"workItem": form1.workItem.data, "workItemType": form1.workItemType.data,
+                              "workItemTypeComplexity": form1.workItemTypeComplexity.data,
+                              "workItemDuration": form1.workItemDuration.data
+                              }
+        return redirect(url_for('priceSimulatorResult', priceSimulatorData=priceSimulatorData))
+    return render_template("priceSimulator.html", form1=form1)
+
+
+@app.route('/priceSimulatorResult/')
+def priceSimulatorResult():
+    return render_template('priceSimulatorResult.html')

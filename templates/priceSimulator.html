@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>{% block title %} Simulator oferta pret {% endblock %}</h1>
+    <form method="POST" action="/priceSimulator/">
+        {{ form1.csrf_token }}
+        <table>
+            <tr><th>{{ form1.workItem.label }}</th><th>{{ form1.workItemType.label }}</th><th>{{ form1.workItemTypeComplexity.label }}</th><th>{{ form1.workItemDuration.label }}</th><th>Proposed rate</th></tr>
+
+            <tr><td>{{ form1.workItem }}</td><td id="workType">{{ form1.workItemType }}</td><td id="complexity">{{ form1.workItemTypeComplexity }}</td><td id="workItemDuration">{{ form1.workItemDuration }}</td>
+                <td id="demo">0</td></tr>
+
+            <tr><td>{% if form1.workItem.errors %}
+            <ul class="errors">
+                {% for error in form1.workItem.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}</td><td>{% if form1.workItemType.errors %}
+            <ul class="errors">
+                {% for error in form1.workItemType.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}</td><td>{% if form1.workItemTypeComplexity.errors %}
+            <ul class="errors">
+                {% for error in form1.workItemTypeComplexity.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}</td><td>{% if form1.workItemDuration.errors %}
+            <ul class="errors">
+                {% for error in form1.workItemDuration.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}</td></tr>
+        </table>
+            <input type="submit" name="Calculate" value="Calculate">
+        <button type="button" onclick='document.getElementById("demo").innerHTML = "Hello JavaScript!"'>Click Me!</button>
+        <button type="button" onclick="calculateRate()">Apasa!</button>
+
+</form>
+<script>
+
+function calculateRate() {
+        var workType = document.getElementById("workType")
+        var complexity = document.getElementById("complexity")
+        var duration = document.getElementById("workItemDuration")
+        if (workType == "B2B Course") {
+            var baseRate = 1000;
+            }else {
+            var baseRate = 600;
+            }
+        if (complexity == "Low") {
+            var complexityFactor = 1;
+        } else if (complexity == "Mid") {
+            var complexityFactor = 2;
+        } else {
+            var complexityFactor = 3;
+        }
+        if (duration < 5) {
+            var durationFactor = 3
+        } else {
+            var durationFactor = 1
+        }
+        var simulatedRate = baseRate * complexityFactor * durationFactor
+        document.getElementById("demo").innerHTML = simulatedRate
+        }
+</script>
+
+{% endblock %}

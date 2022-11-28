@@ -42,20 +42,6 @@
                 {% endfor %}
             </ul>
         {% endif %}
-
-        <p>
-            {{ form.costCompetitie.label }}
-            {{ form.costCompetitie() }}
-        </p>
-
-        {% if form.costCompetitie.errors %}
-            <ul class="errors">
-                {% for error in form.costCompetitie.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-
         <p>
             {{ form.costLiceenta.label }}
             {{ form.costLiceenta() }}
