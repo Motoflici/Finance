@@ -37,36 +37,56 @@
         </table>
             <input type="submit" name="Calculate" value="Calculate">
         <button type="button" onclick='document.getElementById("demo").innerHTML = "Hello JavaScript!"'>Click Me!</button>
-        <button type="button" onclick="calculateRate()">Apasa!</button>
+        <button type="button" onclick='calculateRate()'>Apasa!</button>
+
 
 </form>
 <script>
+document.getElementById("Simulate").onclick = function() {calculateRate()};
 
-function calculateRate() {
-        var workType = document.getElementById("workType")
-        var complexity = document.getElementById("complexity")
-        var duration = document.getElementById("workItemDuration")
-        if (workType == "B2B Course") {
-            var baseRate = 1000;
-            }else {
-            var baseRate = 600;
-            }
-        if (complexity == "Low") {
-            var complexityFactor = 1;
-        } else if (complexity == "Mid") {
-            var complexityFactor = 2;
-        } else {
-            var complexityFactor = 3;
-        }
-        if (duration < 5) {
-            var durationFactor = 3
-        } else {
-            var durationFactor = 1
-        }
-        var simulatedRate = baseRate * complexityFactor * durationFactor
-        document.getElementById("demo").innerHTML = simulatedRate
-        return simulatedRate
-        }
+var workItemType;
+var complexity;
+var duration;
+var baseRate;
+var complexityFactor;
+var durationFactor;
+var simulatedRate;
+
+function calculatebaseRate(){
+    if (workItemType == "B2B Course")
+    baseRate = 1000;
+    }else {
+    baseRate = 600;
+} return baseRate;
+
+function calculateComplexityFactor(){
+    if (complexity == "Low") {
+    complexityFactor = 1;
+    } else if (complexity == "Mid") {
+    complexityFactor = 2;
+    } else {
+    complexityFactor = 3;
+    }
+} return complexityFactor;
+
+function calculateDurationFactor(){
+    if (duration < 5) {
+    durationFactor = 3
+    } else {
+    durationFactor = 1
+    }
+} return durationFactor;
+
+function calculateRate(workType, complexity, duration) {        
+    workItemType = document.getElementById("workType").value;
+    complexity = document.getElementById("complexity").value;
+    duration = document.getElementById("workItemDuration").value;
+    baseRate = calculatebaseRate();
+    complexityFactor = calculateComplexityFactor();
+    durationFactor = calculateDurationFactor();
+    simulatedRate = baseRate * complexityFactor * durationFactor
+    document.getElementById("demo").innerHTML = simulatedRate
+}
 </script>
 
 {% endblock %}
