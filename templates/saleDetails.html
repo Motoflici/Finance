@@ -5,10 +5,21 @@
     <div id="element1">
 
         <h3>Sale main data</h3>
-       <p>Data test
-           {{id[1]}}
-       {{id[2]}}</p>
-
+        <form action="/saleDetails/{{result[0]}}/update" method="POST">
+       <p>Data test</p>
+        <p>{{result[0]}}</p>
+        <p>{{result[1]}}</p>
+            <p>{{result[2]}}</p>
+        <select id="workType" name="workType">
+          <option value="B2B Courses">B2B Courses</option>
+          <option value="Consultancy">Consultancy</option>
+            <option value="Coaching">Coaching</option>
+        </select>
+        <br>
+        <br>
+        <input value="{{result[3]}}" id="workDays" name="workDays"></input>
+        <input type="submit" value="Update"></input>
+        </form>
     </div>
 <div id="element2">
     <h3>Sale extra data</h3>

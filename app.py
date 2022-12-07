@@ -1,4 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, flash, abort
+
+import forms
 from forms import CourseSimulator, SaleDetails
 from flask_sqlalchemy import SQLAlchemy
 import sqlalchemy as sa
@@ -126,15 +128,27 @@ def priceSimulator():
 
 @app.route('/Sales/')
 def sales():
-    query = "SELECT id, client, total FROM Sales;"
+    query = "SELECT id, client, total, workType, workDays FROM Sales;"
     result = engine.execute(text(query))
     return render_template("Sales.html", result=result)
 
 
 @app.route('/saleDetails/<int:record_id>', methods=['GET', 'POST'])
 def saleDetails(record_id):
-    record_id = request.form['record_id']
-    return render_template("saleDetails.html", record_id=record_id)
+    if request.method == 'POST':
+        query = text("SELECT id, Client, total, workType, workDays FROM SALES WHERE id = :x;")
+        result = engine.execute(query, x=record_id).fetchone()
+        # record_id = request.form['record_id']
+        return render_template("saleDetails.html", result=result)
+
+
+@app.route('/saleDetails/<int:record_id>/update', methods=['GET', 'POST'])
+def updateRecord(record_id, workDays):
+    if request.method == 'POST':
+        workDays = request.form.get('workDays')
+        query = text("UPDATE Sales SET workDays = :x WHERE id = :y;")
+        result = engine.execute(query, x=workDays, y=record_id)
+        return url_for('/saleDetails/<int:record_id', record_id=record_id)
 
 
 if __name__ == "__main__":
