@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Courses {% endblock %}</h1>
-   <form method="POST" action="/coursesKPI/">
+<h1>{% block title %} Courses {% endblock %}</h1>
+<table>
+  <td><form method="POST" action="/coursesKPI/">
                 <input type="submit" value="Reset" name="Reset" />
 
-        </form>
-    </body>
-
-    <hr>
+        </form></td>
+  <td><form action="/">
+    <input type="submit" value="Add another course" />
+</form>
+  </td>
+</table>
+<p>Here is the separation between menu and data</p>
 <table>
   <thead>
   <tr>

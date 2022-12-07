@@ -1,12 +1,39 @@
-from flask import Flask, render_template, redirect, url_for, request
-from flask_wtf import form
-
-from forms import CourseSimulator, PriceSimulator
+from flask import Flask, render_template, redirect, url_for, request, flash, abort
+from forms import CourseSimulator, SaleDetails
+from flask_sqlalchemy import SQLAlchemy
+import sqlalchemy as sa
+from sqlalchemy import select, create_engine, text
+from sqlalchemy.orm import sessionmaker
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:FantasyTown1@localhost:3306/Test"
+db = SQLAlchemy(app)
 
-# definit lista container (lista de dictionare)
+# class Sales1(db.Model):
+# id = db.Column('id', db.Integer, primary_key=True)
+# client = db.Column(db.String(100))
+# total = db.Column(db.Integer)
+# workItem = db.Column(db.String(100))
+# workDays = db.Column(db.Integer)
+
+
+# def __init__(self, client, total, workItem, workDays):
+#    self.client = client
+#    self.total = total
+#    self.workItem = workItem
+#    self.workDays = workDays
+
+
+with app.app_context():
+    db.create_all()
+engine = create_engine('mysql://root:FantasyTown1@localhost:3306/Test')
+
+Session = sessionmaker(bind=engine)
+session = Session()
+engine.connect()
+db.init_app(app)
+
 courseList = [
 ]
 
@@ -61,18 +88,54 @@ def ListClear():
     return render_template("coursesKPI.html")
 
 
+simulationDict = []
+
+
 @app.route("/priceSimulator/", methods=['GET', 'POST'])
 def priceSimulator():
-    form1 = PriceSimulator()
-    if form1.validate_on_submit():
-        priceSimulatorData = {"workItem": form1.workItem.data, "workItemType": form1.workItemType.data,
-                              "workItemTypeComplexity": form1.workItemTypeComplexity.data,
-                              "workItemDuration": form1.workItemDuration.data
-                              }
-        return redirect(url_for('priceSimulatorResult', priceSimulatorData=priceSimulatorData))
-    return render_template("priceSimulator.html", form1=form1)
+    if request.method == "POST":
+        simulationData = {"Work item": request.form.get("workItem"),
+                          "Work item type": request.form.get("workItemType"),
+                          "complexity": request.form.get("complexity"),
+                          "duration": request.form.get("duration")
+                          }
+        for i in simulationData.copy():
+            if simulationData["Work item type"] == "B2B Courses":
+                x = 1000
+            else:
+                x = 600
+            simulationData["baseRate"] = x
+            if simulationData["complexity"] == "High":
+                y = 1.5
+            elif simulationData["complexity"] == "Mid":
+                y = 1.3
+            else:
+                y = 1.1
+            simulationData["complexityFactor"] = y
+            if int(simulationData["duration"]) < 5:
+                z = 1.1
+            else:
+                z = 1
+            simulationData["durationFactor"] = z
+            t = x * y * z
+            simulationData["simulatedRate"] = int(t)
+        simulationDict.append(simulationData)
+        return redirect(url_for('priceSimulator', simulationData=simulationData))
+    return render_template("priceSimulator.html", simulationDict=simulationDict)
 
 
-@app.route('/priceSimulatorResult/')
-def priceSimulatorResult():
-    return render_template('priceSimulatorResult.html')
+@app.route('/Sales/')
+def sales():
+    query = "SELECT id, client, total FROM Sales;"
+    result = engine.execute(text(query))
+    return render_template("Sales.html", result=result)
+
+
+@app.route('/saleDetails/<int:record_id>', methods=['GET', 'POST'])
+def saleDetails(record_id):
+    record_id = request.form['record_id']
+    return render_template("saleDetails.html", record_id=record_id)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

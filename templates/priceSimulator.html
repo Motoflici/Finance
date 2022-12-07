@@ -1,92 +1,54 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>{% block title %} Simulator oferta pret {% endblock %}</h1>
-    <form method="POST" action="/priceSimulator/">
-        {{ form1.csrf_token }}
-        <table>
-            <tr><th>{{ form1.workItem.label }}</th><th>{{ form1.workItemType.label }}</th><th>{{ form1.workItemTypeComplexity.label }}</th><th>{{ form1.workItemDuration.label }}</th><th>Proposed rate</th></tr>
+    <form action="/priceSimulator/" method="POST">
+        <label for="workItem">Work item</label><br>
+        <input type="text" id="workItem" name="workItem">
+        <label for="workItemType">Work item type</label>
+        <select id="workItemType" name="workItemType">
+          <option value="B2B Courses">B2B Courses</option>
+          <option value="Consultancy">Consultancy</option>
+        </select>
+        <label for="complexity">Work item complexity</label>
+        <select id="complexity" name="complexity">
+          <option value="High">High</option>
+          <option value="Mid">Mid</option>
+            <option value="Low">Low</option>
+        </select>
+        <label for="duration">Work item duration:</label>
+        <input type="number" id="duration" name="duration" min="1" max="30"><br>
+        <input type="submit"  value="Simulate rate">
+    </form>
+    <div>
+    <form action="/Sales/" method = "POST">
+   <p><input type = "submit" value = "Get sales data" /></p>
+    </form>
+</div>
+    <table>
+        <tr>
+            <th>Work item</th>
+        <th>Work item type</th>
+      <th>Work item complexity</th>
+                  <th>Duration (days)</th>
+      <th>Work item base cost</th>
+       <th>Work item complexity factor</th>
+    <th>Work item duration factor (days)</th>
+<th>Proposed price (EUR)</th>
+        </tr>
+{% for simulation in simulationDict %}
+        <tr>
 
-            <tr><td>{{ form1.workItem }}</td><td id="workType">{{ form1.workItemType }}</td><td id="complexity">{{ form1.workItemTypeComplexity }}</td><td id="workItemDuration">{{ form1.workItemDuration }}</td>
-                <td id="demo">0</td></tr>
+            <td>{{simulation['Work item']}}</td>
+        <td>{{simulation['Work item type']}}</td>
+        <td>{{simulation['complexity']}}</td>
+        <td>{{simulation['duration']}}</td>
+        <td>{{simulation['baseRate']}}</td>
+        <td>{{simulation['complexityFactor']}}</td>
+       <td>{{simulation['durationFactor']}}</td>
+        <td>{{simulation['simulatedRate']}}</td>
+        </tr>
+          {% endfor %}
 
-            <tr><td>{% if form1.workItem.errors %}
-            <ul class="errors">
-                {% for error in form1.workItem.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}</td><td>{% if form1.workItemType.errors %}
-            <ul class="errors">
-                {% for error in form1.workItemType.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}</td><td>{% if form1.workItemTypeComplexity.errors %}
-            <ul class="errors">
-                {% for error in form1.workItemTypeComplexity.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}</td><td>{% if form1.workItemDuration.errors %}
-            <ul class="errors">
-                {% for error in form1.workItemDuration.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}</td></tr>
-        </table>
-            <input type="submit" name="Calculate" value="Calculate">
-        <button type="button" onclick='document.getElementById("demo").innerHTML = "Hello JavaScript!"'>Click Me!</button>
-        <button type="button" onclick='calculateRate()'>Apasa!</button>
-
-
-</form>
-<script>
-document.getElementById("Simulate").onclick = function() {calculateRate()};
-
-var workItemType;
-var complexity;
-var duration;
-var baseRate;
-var complexityFactor;
-var durationFactor;
-var simulatedRate;
-
-function calculatebaseRate(){
-    if (workItemType == "B2B Course")
-    baseRate = 1000;
-    }else {
-    baseRate = 600;
-} return baseRate;
-
-function calculateComplexityFactor(){
-    if (complexity == "Low") {
-    complexityFactor = 1;
-    } else if (complexity == "Mid") {
-    complexityFactor = 2;
-    } else {
-    complexityFactor = 3;
-    }
-} return complexityFactor;
-
-function calculateDurationFactor(){
-    if (duration < 5) {
-    durationFactor = 3
-    } else {
-    durationFactor = 1
-    }
-} return durationFactor;
-
-function calculateRate(workType, complexity, duration) {        
-    workItemType = document.getElementById("workType").value;
-    complexity = document.getElementById("complexity").value;
-    duration = document.getElementById("workItemDuration").value;
-    baseRate = calculatebaseRate();
-    complexityFactor = calculateComplexityFactor();
-    durationFactor = calculateDurationFactor();
-    simulatedRate = baseRate * complexityFactor * durationFactor
-    document.getElementById("demo").innerHTML = simulatedRate
-}
-</script>
+    </table>
 
 {% endblock %}

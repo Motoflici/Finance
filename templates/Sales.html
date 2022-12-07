@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>{% block title %} Sales list {% endblock %}</h1>
+<div class="output">
+
+<table>
+    <thead>
+    <tr>
+        <th>ID Factura</th>
+        <th>Client</th>
+        <th>Suma</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for row in result %}
+            <tr>
+                <td>{{row.id}}</td>
+                <td>{{row.client}}</td>
+                <td>{{row[2]}}</td>
+                <td>
+                <form action="/saleDetails/{{row.id}}" method="post">
+                    <button name="saleDetails" value="{{row.id}}" type="submit">Details</button>
+                </form>
+                </td>
+            </tr>
+        {% endfor %}
+    <th colspan="2">Total (LEI)</th>
+    <td>{{suma}}</td>
+    </tbody>
+</table>
+</div>
+{% endblock %}

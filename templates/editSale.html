@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>{% block title %} Edit sale {% endblock %}</h1>
+<div class="output">
+{% from "_formhelpers.html" import render_field %}
+<form method="post">
+    <dl>
+        {{ render_field(form.saleType) }}
+        {{ render_field(form.days) }}
+    </dl>
+    <p><input type="submit" value="Submit">
+</p></form>
+</div>
+{% endblock %}

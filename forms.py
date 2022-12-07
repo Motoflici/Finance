@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import (StringField, IntegerField, SelectField)
+from wtforms import (StringField, IntegerField, SelectField, SubmitField, SelectFieldBase)
 from wtforms.validators import InputRequired, Length
 
 
@@ -23,3 +23,13 @@ class PriceSimulator(FlaskForm):
     workItemType = SelectField('Tip activitate', choices=[('cpp', 'B2B Course'), ('py', 'Consultancy')])
     workItemTypeComplexity = SelectField('Complexity', choices=[('low', 'Low'), ('mid', 'Mid'), ('high', 'Hig')])
     workItemDuration = IntegerField('Durata activitate', validators=[InputRequired()])
+
+
+class SaleDetails(FlaskForm):
+    id = IntegerField()
+    client = StringField('Client', validators=[InputRequired(), Length(min=3, max=50)])
+    total = IntegerField('Total invoice', validators=[InputRequired()])
+    saleType = SelectField('saleType', choices=[('B2B', 'B2B Course'), ('consultancy', 'Consultancy'), ('coaching', 'Coaching')])
+    days = IntegerField('Durata activitate', validators=[InputRequired()])
+
+
