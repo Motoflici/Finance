@@ -29,7 +29,7 @@ class SaleDetails(FlaskForm):
     id = IntegerField()
     client = StringField('Client', validators=[InputRequired(), Length(min=3, max=50)])
     total = IntegerField('Total invoice', validators=[InputRequired()])
-    saleType = SelectField('saleType', choices=[('B2B', 'B2B Course'), ('consultancy', 'Consultancy'), ('coaching', 'Coaching')])
+    saleType = SelectField('saleType', choices=[('B2B', 'Courses'), ('consultancy', 'Consultancy'), ('coaching', 'Coaching')])
     days = IntegerField('Durata activitate', validators=[InputRequired()])
 
 

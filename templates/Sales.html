@@ -16,7 +16,9 @@
             <tr>
                 <td>{{row.id}}</td>
                 <td>{{row.client}}</td>
-                <td>{{row[2]}}</td>
+                <td>{{row.total}}</td>
+                <td>{{row.workType}}</td>
+                <td>{{row.workDays}}</td>
                 <td>
                 <form action="/saleDetails/{{row.id}}" method="post">
                     <button name="saleDetails" value="{{row.id}}" type="submit">Details</button>

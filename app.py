@@ -1,9 +1,9 @@
-from flask import Flask, render_template, redirect, url_for, request, flash, abort
-
-import forms
+from flask import Flask, render_template, redirect, url_for, request
+import pandas as pd
 from forms import CourseSimulator, SaleDetails
 from flask_sqlalchemy import SQLAlchemy
 import sqlalchemy as sa
+import matplotlib.pyplot as plt
 from sqlalchemy import select, create_engine, text
 from sqlalchemy.orm import sessionmaker
 
@@ -12,12 +12,13 @@ app.config['SECRET_KEY'] = 'your secret key'
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:FantasyTown1@localhost:3306/Test"
 db = SQLAlchemy(app)
 
-# class Sales1(db.Model):
-# id = db.Column('id', db.Integer, primary_key=True)
-# client = db.Column(db.String(100))
-# total = db.Column(db.Integer)
-# workItem = db.Column(db.String(100))
-# workDays = db.Column(db.Integer)
+
+class Sales(db.Model):
+    id = db.Column('id', db.Integer, primary_key=True)
+    client = db.Column(db.String(100))
+    total = db.Column(db.Integer)
+    workItem = db.Column(db.String(100))
+    workDays = db.Column(db.Integer)
 
 
 # def __init__(self, client, total, workItem, workDays):
@@ -34,6 +35,7 @@ engine = create_engine('mysql://root:FantasyTown1@localhost:3306/Test')
 Session = sessionmaker(bind=engine)
 session = Session()
 engine.connect()
+
 db.init_app(app)
 
 courseList = [
@@ -143,13 +145,23 @@ def saleDetails(record_id):
 
 
 @app.route('/saleDetails/<int:record_id>/update', methods=['GET', 'POST'])
-def updateRecord(record_id, workDays):
+def updateRecord(record_id):
     if request.method == 'POST':
+        workType = request.form.get('workType')
         workDays = request.form.get('workDays')
-        query = text("UPDATE Sales SET workDays = :x WHERE id = :y;")
-        result = engine.execute(query, x=workDays, y=record_id)
-        return url_for('/saleDetails/<int:record_id', record_id=record_id)
+        t = text("UPDATE Sales SET workType = :x, workDays = :y WHERE id = :z;")
+        engine.execute(t, x=workType, y=workDays, z=record_id)
+        session.commit()
+        return redirect(url_for('sales'))
 
+
+test = pd.read_sql_table('Sales', engine, 'Test')
+test["dailyRate"] = test["total"] / test["workDays"]
+courses = test[test["workType"] == 'Courses']
+consultancy = test[test["workType"] == 'Consultancy']
+coaching = test[test["workType"] == 'Coaching']
+
+print(test, courses, consultancy, coaching)
 
 if __name__ == "__main__":
     app.run(debug=True)
