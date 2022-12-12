@@ -3,12 +3,15 @@
     <h1>{% block title %} Sales list {% endblock %}</h1>
 <div class="output">
 
-<table>
+<table id="table1">
     <thead>
     <tr>
         <th>ID Factura</th>
         <th>Client</th>
         <th>Suma</th>
+        <th>Work type</th>
+        <th># of days</th>
+        <th>Update record</th>
     </tr>
     </thead>
     <tbody>
@@ -27,8 +30,53 @@
             </tr>
         {% endfor %}
     <th colspan="2">Total (LEI)</th>
-    <td>{{suma}}</td>
+    <td>{{t}}</td>
     </tbody>
 </table>
+
+<canvas id="statChart" style="width:100%;max-width:700px"></canvas>
+    <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+    <script>
+var xValues = ["Coaching", "Consultancy", "Courses"];
+var yValues = [{{ coaching1 }}, {{ consultancy1 }}, {{ courses1 }}];
+var barColors = ["red", "green","blue"];
+
+new Chart("statChart", {
+  type: "bar",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "Income categories"
+    }
+  }
+});
+
+
+new Chart("myChart", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "Totals pie"
+    }
+  }
+});
+</script>
+
 </div>
 {% endblock %}

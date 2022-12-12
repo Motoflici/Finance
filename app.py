@@ -132,7 +132,18 @@ def priceSimulator():
 def sales():
     query = "SELECT id, client, total, workType, workDays FROM Sales;"
     result = engine.execute(text(query))
-    return render_template("Sales.html", result=result)
+    test = pd.read_sql_table('Sales', engine, 'Test')
+    test["dailyRate"] = test["total"] / test["workDays"]
+    courses = test[test["workType"] == 'Courses']
+    courses1 = float(courses["total"].sum())
+    consultancy = test[test["workType"] == 'Consultancy']
+    consultancy1 = float(consultancy["total"].sum())
+    coaching = test[test["workType"] == 'Coaching']
+    coaching1 = float(coaching["total"].sum())
+    none = test[test["workType"] == 'None']
+    none1 = float(none["total"].sum())
+    t = float(test["total"].sum())
+    return render_template("Sales.html", result=result, courses1=courses1, consultancy1=consultancy1, coaching1=coaching1, t=t)
 
 
 @app.route('/saleDetails/<int:record_id>', methods=['GET', 'POST'])
@@ -154,14 +165,6 @@ def updateRecord(record_id):
         session.commit()
         return redirect(url_for('sales'))
 
-
-test = pd.read_sql_table('Sales', engine, 'Test')
-test["dailyRate"] = test["total"] / test["workDays"]
-courses = test[test["workType"] == 'Courses']
-consultancy = test[test["workType"] == 'Consultancy']
-coaching = test[test["workType"] == 'Coaching']
-
-print(test, courses, consultancy, coaching)
 
 if __name__ == "__main__":
     app.run(debug=True)

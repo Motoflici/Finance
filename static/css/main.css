@@ -95,3 +95,11 @@ text-align: center;
             }
         }
 tr:hover {background-color: coral;}
+
+#statChart{
+    float: left
+}
+
+#table1 {
+    float: left
+}
